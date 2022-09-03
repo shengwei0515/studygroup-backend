@@ -1,0 +1,52 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server celler server.",
+        "title": "Studygroup",
+        "contact": {
+            "name": "API Support",
+            "email": "shengwei199505@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/hello-world/": {
+            "get": {
+                "description": "do ping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "example"
+                ],
+                "summary": "ping example",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.HelloWorld"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.HelloWorld": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
