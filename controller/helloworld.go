@@ -2,13 +2,12 @@ package controller
 
 import (
 	"net/http"
+	"studygroup/model"
 
 	"github.com/gin-gonic/gin"
 )
 
-type HelloWorld struct {
-	Message string `json:"message"`
-}
+type HelloWroldController struct{}
 
 // PingExample godoc
 // @Summary ping example
@@ -19,10 +18,10 @@ type HelloWorld struct {
 // @Produce json
 // @Success 200 {object} HelloWorld
 // @Router /hello-world/ [get]
-func GetHelloWorld(c *gin.Context) {
+func (controller HelloWroldController) GetHelloWorld(ctx *gin.Context) {
 
-	response := new(HelloWorld)
+	response := new(model.HelloWorld)
 	response.Message = "Hello World !"
 
-	c.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusOK, response)
 }

@@ -1,14 +1,8 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-
 	"studygroup/db/postgres"
-	_ "studygroup/docs"
-	"studygroup/router"
-
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
+	"studygroup/server"
 )
 
 // @title          	Studygroup
@@ -27,11 +21,5 @@ func main() {
 	db := postgres.GetConnection()
 	defer db.Close()
 
-	r := gin.Default()
-
-	router.SetupRouter(r)
-
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	r.Run("0.0.0.0:8080")
+	server.Init()
 }
