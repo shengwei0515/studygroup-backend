@@ -27,6 +27,11 @@ func NewRouter() *gin.Engine {
 			helloWorldController := new(controller.HelloWroldController)
 			helloWorldGroup.GET("/", helloWorldController.GetHelloWorld)
 		}
+		accountGroup := v1.Group("/account")
+		{
+			accountController := new(controller.AccountController)
+			accountGroup.POST("/", accountController.CreateAccount)
+		}
 	}
 	return router
 }

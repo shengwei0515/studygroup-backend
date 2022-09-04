@@ -8,10 +8,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var Db *gorm.DB
-var DbErr error
+var db *gorm.DB
 
-func GetConnection() *gorm.DB {
+func Init() {
 	dbHost := "localhost"
 	dbPort := "5432"
 	dbUser := "postgres"
@@ -22,11 +21,18 @@ func GetConnection() *gorm.DB {
 	dbUri := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUser, dbPassword, dbName)
 
-	db, err := gorm.Open(dbDriver, dbUri)
+	postgres, err := gorm.Open(dbDriver, dbUri)
 	if err != nil {
 		log.Panicf("Connect to postgres failed with error %s", err)
 		panic("Failed to connect to db")
 	}
+	db = postgres
+}
 
+func GetDb() *gorm.DB {
 	return db
+}
+
+func CloseDb() {
+	db.Close()
 }

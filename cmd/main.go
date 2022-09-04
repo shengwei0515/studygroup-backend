@@ -2,6 +2,7 @@ package main
 
 import (
 	"studygroup/db/postgres"
+	"studygroup/model/pgmigrate"
 	"studygroup/server"
 )
 
@@ -18,8 +19,10 @@ import (
 // @BasePath  /api/v1
 func main() {
 
-	db := postgres.GetConnection()
-	defer db.Close()
+	postgres.Init()
+	defer postgres.CloseDb()
+
+	pgmigrate.AutoMigratePostgres()
 
 	server.Init()
 }
