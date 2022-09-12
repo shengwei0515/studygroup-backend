@@ -21,5 +21,5 @@ export PATH=$(go env GOPATH)/bin:$PATH
 * Run this command after you finished your work
   This command can be used to generate/update the swagger files
   ```
-    go init -g <path to main.go>
+    swag init -g <path to main.go>
   ```
