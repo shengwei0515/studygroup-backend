@@ -1,5 +1,10 @@
 basePath: /api/v1
 definitions:
+  controller.AuthResponse:
+    properties:
+      message:
+        type: string
+    type: object
   controller.CreateAccountResponse:
     properties:
       message:
@@ -10,8 +15,22 @@ definitions:
       message:
         type: string
     type: object
+  form.AccountResetPassword:
+    properties:
+      newPassword:
+        type: string
+    type: object
   form.AccountSignup:
     properties:
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  model.Account:
+    properties:
+      id:
+        type: string
       name:
         type: string
       password:
@@ -28,7 +47,64 @@ info:
   title: Studygroup
   version: "1.0"
 paths:
-  /account:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      parameters:
+      - description: login account
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/form.AccountSignup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.AuthResponse'
+      summary: Login
+      tags:
+      - Auth
+  /auth/logout:
+    get:
+      description: Logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.AuthResponse'
+      summary: Logout
+      tags:
+      - Auth
+  /authed/account:
+    delete:
+      description: Delete Account
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Delete Account
+      tags:
+      - Account
+    get:
+      description: Get Account Info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Account'
+      summary: Get Account Info
+      tags:
+      - Account
     post:
       consumes:
       - application/json
@@ -48,6 +124,41 @@ paths:
           schema:
             $ref: '#/definitions/controller.CreateAccountResponse'
       summary: Create Account
+      tags:
+      - Account
+  /authed/account/all:
+    get:
+      description: Get All Accounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Account'
+            type: array
+      summary: Get All Accounts
+      tags:
+      - Account
+  /authed/account/resetpwd:
+    put:
+      consumes:
+      - application/json
+      description: Update Password
+      parameters:
+      - description: new password info to update
+        in: body
+        name: updatePassword
+        required: true
+        schema:
+          $ref: '#/definitions/form.AccountResetPassword'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: Update Password
       tags:
       - Account
   /hello-world/:
