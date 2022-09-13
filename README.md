@@ -1,6 +1,9 @@
 # studygroup-backend
 
 ## Developer Guild
+### go version
+18.6
+
 ### Swagger
 This server use swagger to generate api docs
 Developor sholud remember to update the swagger docs by using `swag` cli of golang
