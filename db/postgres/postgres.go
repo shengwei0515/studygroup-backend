@@ -2,15 +2,33 @@ package postgres
 
 import (
 	"fmt"
-	"log"
-
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"log"
+	"time"
 )
 
 var db *gorm.DB
 
-func Init() {
+const dbReconnectTimes = 5
+const dbReconnectSec = 1
+
+func InitWithRetry() {
+	var err interface{}
+	for i := 0; i < dbReconnectTimes; i += 1 {
+		err = Init()
+		if err == nil {
+			break
+		}
+		log.Printf("DB Init error %s", err)
+		time.Sleep(time.Duration(int64(dbReconnectSec * time.Second)))
+	}
+	if err != nil {
+		log.Panicf("DB Init error after retry %c time, error: %s", dbReconnectTimes, err)
+	}
+}
+
+func Init() error {
 	dbHost := "localhost"
 	dbPort := "5432"
 	dbUser := "postgres"
@@ -23,10 +41,11 @@ func Init() {
 
 	postgres, err := gorm.Open(dbDriver, dbUri)
 	if err != nil {
-		log.Panicf("Connect to postgres failed with error %s", err)
-		panic("Failed to connect to db")
+		return fmt.Errorf("Connect to postgres failed with error: %s", err)
 	}
+
 	db = postgres
+	return nil
 }
 
 func GetDb() *gorm.DB {

@@ -19,7 +19,7 @@ import (
 // @BasePath  /api/v1
 func main() {
 
-	postgres.Init()
+	postgres.InitWithRetry()
 	defer postgres.CloseDb()
 
 	pgmigrate.AutoMigratePostgres()
