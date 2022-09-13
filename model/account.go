@@ -85,10 +85,15 @@ func (a Account) Delete(id string) error {
 }
 
 func (a Account) UpdatePasswd(id string, password string) (*gorm.DB, error) {
+	hashPwd, err := HashPassword(password)
+	if err != nil {
+		return nil, err
+	}
+
 	db := postgres.GetDb()
 
 	raw := `UPDATE account SET password = ? WHERE id = ?;`
-	result := db.Exec(raw, password, id)
+	result := db.Exec(raw, hashPwd, id)
 	if err := result.Error; err != nil {
 		return nil, err
 	}

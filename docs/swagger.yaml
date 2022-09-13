@@ -105,27 +105,6 @@ paths:
       summary: Get Account Info
       tags:
       - Account
-    post:
-      consumes:
-      - application/json
-      description: Create Account
-      parameters:
-      - description: account info to create
-        in: body
-        name: account
-        required: true
-        schema:
-          $ref: '#/definitions/form.AccountSignup'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.CreateAccountResponse'
-      summary: Create Account
-      tags:
-      - Account
   /authed/account/all:
     get:
       description: Get All Accounts
@@ -176,4 +155,26 @@ paths:
       summary: ping example
       tags:
       - hello world
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create Account
+      parameters:
+      - description: account info to create
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/form.AccountSignup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CreateAccountResponse'
+      summary: Create Account
+      tags:
+      - Register
 swagger: "2.0"

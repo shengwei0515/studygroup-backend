@@ -34,6 +34,10 @@ func NewRouter() *gin.Engine {
 			helloWorldController := new(controller.HelloWorldController)
 			helloWorldGroup.GET("/", helloWorldController.GetHelloWorld)
 		}
+
+		accountController := new(controller.AccountController)
+		v1.POST("/register", accountController.CreateAccount)
+
 		authGroup := v1.Group("/auth")
 		{
 			authController := new(controller.AuthController)
@@ -44,7 +48,6 @@ func NewRouter() *gin.Engine {
 		{
 			accountGroup := authedGroup.Group("/account", AuthSessionMiddle())
 			{
-				accountController := new(controller.AccountController)
 				accountGroup.POST("/", accountController.CreateAccount)
 				accountGroup.GET("/", accountController.GetAccountInfo)
 				accountGroup.DELETE("/", accountController.DeleteAccount)

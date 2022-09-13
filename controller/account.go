@@ -23,13 +23,13 @@ var accountModel = new(model.Account)
 // @Summary Create Account
 // @Schemes
 // @Description Create Account
-// @Tags Account
+// @Tags Register
 // @Accept json
 // @Produce json
 // useing param with [param_name param_type para_data_type is_required comment]
 // @Param account body form.AccountSignup true "account info to create"
 // @Success 200 {object} CreateAccountResponse
-// @Router /authed/account [post]
+// @Router /register [post]
 func (controller AccountController) CreateAccount(ctx *gin.Context) {
 	var payload form.AccountSignup
 	err := ctx.ShouldBindJSON(&payload)

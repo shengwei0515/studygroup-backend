@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"studygroup/form"
 	"studygroup/model"
@@ -49,7 +50,19 @@ func (controller AuthController) Login(ctx *gin.Context) {
 		return
 	}
 
-	if payload.Password != account.Password {
+	//hashPwd, err := model.HashPassword(payload.Password)
+	//if err != nil {
+	//	ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf(" password hash failed!"))
+	//	return
+	//}
+
+	//if hashPwd != account.Password {
+	//	ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf(" wrong password!"))
+	//	return
+	//}
+
+	err = bcrypt.CompareHashAndPassword([]byte(account.Password), []byte(payload.Password))
+	if err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf(" wrong password!"))
 		return
 	}
