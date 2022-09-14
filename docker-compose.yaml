@@ -11,6 +11,8 @@ services:
       - 80:8080
     links:
       - db
+    depends_on:
+      - db
     restart: on-failure
     environment:
       DB_RECONNECT_TIMES: 5
