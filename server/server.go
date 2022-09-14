@@ -1,6 +1,6 @@
 package server
 
-func Init() {
+func Init(addr string) {
 	r := NewRouter()
-	r.Run("0.0.0.0:8080")
+	r.Run(addr)
 }

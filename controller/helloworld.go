@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type HelloWroldController struct{}
+type HelloWorldController struct{}
 
 type HelloWorld struct {
 	Message string `json:"message"`
@@ -21,7 +21,7 @@ type HelloWorld struct {
 // @Produce json
 // @Success 200 {object} HelloWorld
 // @Router /hello-world/ [get]
-func (controller HelloWroldController) GetHelloWorld(ctx *gin.Context) {
+func (controller HelloWorldController) GetHelloWorld(ctx *gin.Context) {
 
 	response := new(HelloWorld)
 	response.Message = "Hello World !"

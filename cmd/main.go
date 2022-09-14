@@ -1,6 +1,7 @@
 package main
 
 import (
+	"studygroup"
 	"studygroup/db/postgres"
 	"studygroup/model/pgmigrate"
 	"studygroup/server"
@@ -18,11 +19,12 @@ import (
 
 // @BasePath  /api/v1
 func main() {
+	c := studygroup.ReadEnvConfig()
 
-	postgres.Init()
+	postgres.InitWithRetry(c.DbUri, c.DbDriver, c.DbReconnectTimes, c.DbReconnectBounceSec)
 	defer postgres.CloseDb()
 
 	pgmigrate.AutoMigratePostgres()
 
-	server.Init()
+	server.Init(c.ServerAddr)
 }
