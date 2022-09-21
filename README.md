@@ -17,6 +17,11 @@ export DB_DRIVER=postgres
 
 export SERVER_ADDR=0.0.0.0:8080
 
+export REDIS_CONNECT_SIZE=10
+export REDIS_NETWORK=tcp
+export REDIS_ADDR=localhost:6379
+export REDIS_PASSWORD=
+
 ```
 
 ### Swagger
