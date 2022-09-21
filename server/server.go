@@ -1,6 +1,8 @@
 package server
 
-func Init(addr string) {
-	r := NewRouter()
+import "studygroup"
+
+func Init(addr string, session studygroup.WebSessionConfig) {
+	r := NewRouter(session)
 	r.Run(addr)
 }
