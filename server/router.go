@@ -2,8 +2,10 @@ package server
 
 import (
 	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
+	redis "github.com/gin-contrib/sessions/redis"
+	"log"
 	"net/http"
+	"studygroup"
 	"studygroup/controller"
 	_ "studygroup/docs"
 
@@ -12,15 +14,17 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-const KEY = "sessionkey"
-
-func NewRouter() *gin.Engine {
+func NewRouter(sessionConfig studygroup.WebSessionConfig) *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	store := cookie.NewStore([]byte(KEY))
-	router.Use(sessions.Sessions("studygroup", store))
+	store, err := redis.NewStore(sessionConfig.RedisConnectSize, sessionConfig.RedisNetwork, sessionConfig.RedisAddr, sessionConfig.RedisPassword, []byte(sessionConfig.SessionKey))
+	if err != nil {
+		log.Panicf("Redis Init error, error: %s", err)
+	}
+
+	router.Use(sessions.Sessions(sessionConfig.SessionName, store))
 
 	router.GET("/", func(ctx *gin.Context) {
 		ctx.Redirect(http.StatusMovedPermanently, "/swagger/index.html")

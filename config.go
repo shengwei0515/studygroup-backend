@@ -14,6 +14,16 @@ type WebConfig struct {
 	DbUri                string
 	DbDriver             string
 	ServerAddr           string
+	SessionConfig        WebSessionConfig
+}
+
+type WebSessionConfig struct {
+	RedisConnectSize int
+	RedisNetwork     string
+	RedisAddr        string
+	RedisPassword    string
+	SessionName      string
+	SessionKey       string
 }
 
 func ReadEnvConfig() WebConfig {
@@ -41,11 +51,26 @@ func ReadEnvConfig() WebConfig {
 
 	addr := os.Getenv("SERVER_ADDR")
 
+	sessionKey := os.Getenv("SESSION_KEY")
+	redisConnectSize, err := strconv.Atoi(os.Getenv("REDIS_CONNECT_SIZE"))
+	if err != nil {
+		log.Printf("load REDIS_CONNECT_SIZE from config fail, use default value 10")
+		dbReconnectBounceTime = 10
+	}
+
 	return WebConfig{
 		DbReconnectTimes:     dbReconnectTimes,
 		DbReconnectBounceSec: dbReconnectBounceSec,
 		DbUri:                dbUri,
 		DbDriver:             dbDriver,
 		ServerAddr:           addr,
+		SessionConfig: WebSessionConfig{
+			RedisConnectSize: redisConnectSize,
+			RedisNetwork:     os.Getenv("REDIS_NETWORK"),
+			RedisAddr:        os.Getenv("REDIS_ADDR"),
+			RedisPassword:    os.Getenv("REDIS_PASSWORD"),
+			SessionName:      os.Getenv("SESSION_NAME"),
+			SessionKey:       sessionKey,
+		},
 	}
 }

@@ -5,9 +5,9 @@ import (
 	"studygroup/form"
 	"time"
 
-	"github.com/jinzhu/gorm"
 	uuid "github.com/satori/go.uuid"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type Account struct {

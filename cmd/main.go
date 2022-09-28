@@ -26,5 +26,5 @@ func main() {
 
 	pgmigrate.AutoMigratePostgres()
 
-	server.Init(c.ServerAddr)
+	server.Init(c.ServerAddr, c.SessionConfig)
 }
