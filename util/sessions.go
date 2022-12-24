@@ -3,6 +3,7 @@ package util
 import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func SaveAuthSession(c *gin.Context, id string) error {
@@ -21,7 +22,7 @@ func ClearAuthSession(c *gin.Context) {
 func HasSession(c *gin.Context) bool {
 	session := sessions.Default(c)
 	if session == nil {
-		print("In HasSession with session is nil")
+		log.Printf("In HasSession with session is nil")
 		return false
 	}
 	if sessionValue := session.Get("userId"); sessionValue == nil {
