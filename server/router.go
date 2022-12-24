@@ -19,7 +19,7 @@ func NewRouter(sessionConfig studygroup.WebSessionConfig) *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	store, err := redis.NewStore(sessionConfig.RedisConnectSize, sessionConfig.RedisNetwork, sessionConfig.RedisAddr, sessionConfig.RedisPassword, []byte(sessionConfig.SessionKey))
+	store, err := redis.NewStore(sessionConfig.RedisConnectSize, sessionConfig.RedisNetwork, sessionConfig.RedisAddr, "", []byte(sessionConfig.SessionKey))
 	if err != nil {
 		log.Panicf("Redis Init error, error: %s", err)
 	}
